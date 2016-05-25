@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var category = mongoose.model('Category');
+var subcategory = mongoose.model('Subcategory');
 
 router.post('/', function(req, res) {
     var Category = new category(req.body);
@@ -22,12 +23,21 @@ router.get('/listall', function(req, res) {
     });
 });
 
-router.get('/list/:id', function(req, res) {
-    product.findById(req.params.id, function(err, category) {
-        if (err) {
-            console.log(err);
+
+//listing all subcategories present in category.
+router.get('/list/:id/listsubcategoies', function(req, res) {
+    var data ={};
+    category.findById(req.params.id, function(err, category) {
+        data.category = category;
+        if (err) { console.log(err); }
+        if(category){
+            subcategory.find({'CategoryId':category.id}, function(err, sbcategory){
+                data.subcat = sbcategory;
+                //category['subcat'] = sbcategory;
+                //console.log(category);
+                res.json(data);
+            });
         }
-        res.json(category);
     });
 });
 router.delete('/delete/:id', function(req, res) {

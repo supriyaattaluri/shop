@@ -3,10 +3,7 @@ module.exports = function(mongoose) {
     var Schema = mongoose.Schema;
     var subcategorySchema = new Schema({
 
-        CategoryId: {
-            type: Schema.ObjectId,
-            ref: "category"
-        },
+        CategoryId: String,
         SubCategoryName: String,
         Code: Number,
         status: {
@@ -24,3 +21,7 @@ module.exports = function(mongoose) {
     var Subcategory = mongoose.model('Subcategory', subcategorySchema);
     return Subcategory;
 }
+/*{
+            type: Schema.ObjectId,
+            ref: "category"
+        },*/
